@@ -1,0 +1,1773 @@
+# zonot.
+barber 
+```javascript
+// src/utils/index.js
+export const createPageUrl = (pageName) => {
+  const routes = {
+    HomePage: "/",
+    BarberLogin: "/barberlogin",
+    BarberDashboard: "/barberdashboard",
+    ClientBooking: "/clientbooking",
+    CancelAppointment: "/cancelappointment",
+    Gallery: "/gallery"
+  };
+  return routes[pageName] || "/";
+};
+```
+```javascript
+// src/main.jsx
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import './index.css'
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+```
+```javascript
+// src/App.jsx
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import BarberLogin from "./pages/BarberLogin";
+import BarberDashboard from "./pages/BarberDashboard";
+import ClientBooking from "./pages/ClientBooking";
+import CancelAppointment from "./pages/CancelAppointment";
+import Gallery from "./pages/Gallery";
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/barberlogin" element={<BarberLogin />} />
+        <Route path="/barberdashboard" element={<BarberDashboard />} />
+        <Route path="/clientbooking" element={<ClientBooking />} />
+        <Route path="/cancelappointment" element={<CancelAppointment />} />
+        <Route path="/gallery" element={<Gallery />} />
+      </Routes>
+    </Router>
+  );
+}
+export default App;
+```
+```javascript
+// src/pages/HomePage.jsx
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { createPageUrl } from "@/utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Scissors, Calendar, X, Crown, Camera } from "lucide-react";
+import { motion } from "framer-motion";
+export default function HomePage() {
+  const navigate = useNavigate();
+ 
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="w-full max-w-5xl"
+      >
+        {/* Header */}
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+            className="inline-flex items-center justify-center w-32 h-32 mb-8 rounded-full bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-600 shadow-2xl ring-8 ring-amber-200/20"
+          >
+            <Scissors className="w-16 h-16 text-white" />
+          </motion.div>
+        
+          <motion.h1
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="text-7xl font-extralight text-transparent bg-gradient-to-r from-amber-400 to-yellow-300 bg-clip-text mb-6"
+          >
+            zonot
+          </motion.h1>
+        
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
+            className="text-2xl text-slate-300 max-w-2xl mx-auto leading-relaxed"
+          >
+            Premium Barbershop Experience
+          </motion.p>
+        
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.9 }}
+            className="mt-6"
+          >
+            <span className="inline-flex items-center px-6 py-2 rounded-full bg-green-500/20 text-green-300 text-lg font-medium">
+              $4 Haircuts • Professional Service
+            </span>
+          </motion.div>
+        </div>
+        {/* Main Action Cards */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {/* Book Appointment */}
+          <motion.div initial={{ x: -50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 1.0 }}>
+            <Card className="bg-gradient-to-br from-blue-600 to-indigo-700 border-0 hover:shadow-2xl transition-all duration-500 cursor-pointer group overflow-hidden relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <CardContent className="p-8 text-center relative z-10">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <Calendar className="w-10 h-10 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold text-white mb-4">Book Appointment</h2>
+                <p className="text-blue-100 mb-8 leading-relaxed">Schedule your premium haircut experience</p>
+                <div className="space-y-3 mb-6">
+                  <div className="bg-white/10 rounded-lg p-3 backdrop-blur-sm">
+                    <span className="text-white font-semibold text-lg">$4.00</span>
+                    <span className="text-blue-100 text-sm ml-2">50-minute service</span>
+                  </div>
+                </div>
+                <Button onClick={() => navigate(createPageUrl("ClientBooking"))} className="w-full bg-white text-blue-700 hover:bg-blue-50 border-0 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+                  Book Now
+                </Button>
+              </CardContent>
+            </Card>
+          </motion.div>
+          {/* Cancel Appointment */}
+          <motion.div initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.2 }}>
+            <Card className="bg-gradient-to-br from-red-600 to-pink-700 border-0 hover:shadow-2xl transition-all duration-500 cursor-pointer group overflow-hidden relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-red-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <CardContent className="p-8 text-center relative z-10">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <X className="w-10 h-10 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold text-white mb-4">Cancel Appointment</h2>
+                <p className="text-red-100 mb-8 leading-relaxed">Need to cancel? Do it up to 5 hours before</p>
+                <div className="space-y-2 mb-6">
+                  <div className="bg-white/10 rounded-lg p-2 backdrop-blur-sm">
+                    <span className="text-red-100 text-sm">Cancellation fee: </span>
+                    <span className="text-white font-semibold">$2.00</span>
+                  </div>
+                </div>
+                <Button onClick={() => navigate(createPageUrl("CancelAppointment"))} className="w-full bg-white text-red-700 hover:bg-red-50 border-0 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+                  Cancel Appointment
+                </Button>
+              </CardContent>
+            </Card>
+          </motion.div>
+          {/* Gallery */}
+          <motion.div initial={{ x: 50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 1.4 }}>
+            <Card className="bg-gradient-to-br from-purple-600 to-violet-700 border-0 hover:shadow-2xl transition-all duration-500 cursor-pointer group overflow-hidden relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <CardContent className="p-8 text-center relative z-10">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <Camera className="w-10 h-10 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold text-white mb-4">Our Work</h2>
+                <p className="text-purple-100 mb-8 leading-relaxed">Browse our gallery of satisfied clients</p>
+                <Button onClick={() => navigate(createPageUrl("Gallery"))} className="w-full bg-white text-purple-700 hover:bg-purple-50 border-0 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+                  View Gallery
+                </Button>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
+        {/* Barber Access */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.6 }} className="text-center">
+          <Card className="bg-gradient-to-r from-amber-500/10 to-yellow-500/10 backdrop-blur-sm border border-amber-500/20 hover:shadow-xl transition-all duration-500 cursor-pointer max-w-md mx-auto group">
+            <CardContent className="p-6">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <Crown className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-amber-300 mb-2">ספר</h3>
+              <p className="text-slate-400 text-sm mb-6">ניהול תורים, זמני עבודה וגלריה</p>
+              <Button onClick={() => navigate(createPageUrl("BarberLogin"))} variant="outline" className="w-full border-amber-400/50 text-amber-300 hover:bg-amber-500/20 hover:border-amber-400 transition-all duration-300">
+                כניסה לספר
+              </Button>
+            </CardContent>
+          </Card>
+        </motion.div>
+        {/* Footer */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }} className="text-center mt-16">
+          <p className="text-slate-500 text-sm">Professional barbershop management system • zonot 2024</p>
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+}
+```
+```javascript
+// src/pages/BarberLogin.jsx
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { createPageUrl } from "@/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowRight, Lock, AlertCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+export default function BarberLogin() {
+  const navigate = useNavigate();
+  const [code, setCode] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+   
+    await new Promise(resolve => setTimeout(resolve, 800));
+   
+    if (code === "290808") {
+      navigate(createPageUrl("BarberDashboard"));
+    } else {
+      setError("קוד אימות שגוי");
+    }
+    setIsLoading(false);
+  };
+  return (
+    <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-slate-50 via-amber-50 to-slate-100">
+      <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} className="w-full max-w-md">
+        <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+          <CardHeader className="text-center pb-6">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-amber-500 to-yellow-600 flex items-center justify-center">
+              <Lock className="w-8 h-8 text-white" />
+            </div>
+            <CardTitle className="text-2xl font-light text-slate-800">כניסה לספר</CardTitle>
+            <p className="text-slate-600 mt-2">הכנס קוד אימות לכניסה למערכת</p>
+          </CardHeader>
+        
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-700">קוד אימות</label>
+                <Input
+                  type="password"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  placeholder="הכנס קוד אימות"
+                  className="text-center text-lg tracking-wider border-2 focus:border-amber-500 transition-colors"
+                  required
+                />
+              </div>
+             
+              {error && (
+                <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+                  <Alert variant="destructive" className="bg-red-50 border-red-200">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertDescription>{error}</AlertDescription>
+                  </Alert>
+                </motion.div>
+              )}
+             
+              <Button type="submit" disabled={isLoading || !code} className="w-full bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-white py-3 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50">
+                {isLoading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    בודק קוד...
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    כניסה
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                )}
+              </Button>
+             
+              <Button type="button" variant="ghost" onClick={() => navigate(createPageUrl("HomePage"))} className="w-full text-slate-600 hover:text-slate-800">
+                חזרה לדף הראשי
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </motion.div>
+    </div>
+  );
+}
+```
+```javascript
+// src/pages/BarberDashboard.jsx
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { createPageUrl } from "@/utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Calendar, Clock, Users, Settings, LogOut, Camera, Bell } from "lucide-react";
+import { motion } from "framer-motion";
+import { Skeleton } from "@/components/ui/skeleton";
+import WorkingHoursSetup from "../components/barber/WorkingHoursSetup";
+import AppointmentsList from "../components/barber/AppointmentsList";
+import BarberStats from "../components/barber/BarberStats";
+import GalleryManager from "../components/barber/GalleryManager";
+import RemindersList from "../components/barber/RemindersList";
+// Mock data functions
+const mockAppointments = [
+  {
+    id: 1,
+    client_name: "John Doe",
+    client_email: "john@example.com",
+    appointment_date: "2024-01-15",
+    start_time: "15:00",
+    end_time: "15:50",
+    status: "booked",
+    price: 4.0
+  }
+];
+const mockWorkingHours = [
+  { day_of_week: 0, start_time: "15:00", end_time: "22:00", is_available: true },
+  { day_of_week: 1, start_time: "15:00", end_time: "22:00", is_available: true }
+];
+export default function BarberDashboard() {
+  const navigate = useNavigate();
+  const [appointments, setAppointments] = useState([]);
+  const [workingHours, setWorkingHours] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    loadData();
+  }, []);
+  const loadData = async () => {
+    try {
+      // Simulate API calls
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setAppointments(mockAppointments);
+      setWorkingHours(mockWorkingHours);
+    } catch (error) {
+      console.error("Error loading data:", error);
+    }
+    setIsLoading(false);
+  };
+  const handleLogout = () => {
+    navigate(createPageUrl("HomePage"));
+  };
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-amber-50 p-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-4xl font-light text-slate-800 mb-2">דשבורד ספר</h1>
+            <p className="text-slate-600">ניהול תורים וזמני עבודה</p>
+          </div>
+          <Button onClick={handleLogout} variant="outline" className="flex items-center gap-2 hover:bg-red-50 hover:text-red-700 hover:border-red-200">
+            <LogOut className="w-4 h-4" />
+            יציאה
+          </Button>
+        </motion.div>
+        {/* Stats Cards */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+          <BarberStats appointments={appointments} isLoading={isLoading} />
+        </motion.div>
+        {/* Main Content Tabs */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-8">
+          <Tabs defaultValue="appointments" className="w-full">
+            <TabsList className="grid w-full grid-cols-5 mb-6 bg-white shadow-sm">
+              <TabsTrigger value="appointments" className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                תורים
+              </TabsTrigger>
+              <TabsTrigger value="schedule" className="flex items-center gap-2">
+                <Clock className="w-4 h-4" />
+                זמני עבודה
+              </TabsTrigger>
+              <TabsTrigger value="gallery" className="flex items-center gap-2">
+                <Camera className="w-4 h-4" />
+                גלריה
+              </TabsTrigger>
+              <TabsTrigger value="reminders" className="flex items-center gap-2">
+                <Bell className="w-4 h-4" />
+                תזכורות
+              </TabsTrigger>
+              <TabsTrigger value="clients" className="flex items-center gap-2">
+                <Users className="w-4 h-4" />
+                לקוחות
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="appointments">
+              <AppointmentsList appointments={appointments} isLoading={isLoading} onRefresh={loadData} />
+            </TabsContent>
+            <TabsContent value="schedule">
+              <WorkingHoursSetup workingHours={workingHours} onUpdate={loadData} />
+            </TabsContent>
+            <TabsContent value="gallery">
+              <GalleryManager />
+            </TabsContent>
+            <TabsContent value="reminders">
+              <RemindersList appointments={appointments} onRefresh={loadData} />
+            </TabsContent>
+            <TabsContent value="clients">
+              <Card className="border-0 shadow-lg bg-white/90 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Users className="w-5 h-5" />
+                    רשימת לקוחות
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {appointments.filter(apt => apt.status !== 'cancelled')
+                      .reduce((unique, apt) => {
+                        const exists = unique.find(u => u.client_email === apt.client_email);
+                        if (!exists) unique.push(apt);
+                        return unique;
+                      }, [])
+                      .map((client, index) => (
+                        <div key={index} className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm border border-slate-100">
+                          <div>
+                            <h3 className="font-medium text-slate-800">{client.client_name}</h3>
+                            <p className="text-sm text-slate-600">{client.client_email}</p>
+                          </div>
+                          <div className="text-sm text-slate-500">
+                            {appointments.filter(apt => apt.client_email === client.client_email && apt.status !== 'cancelled').length} תורים
+                          </div>
+                        </div>
+                      ))
+                    }
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+```
+```javascript
+// src/pages/ClientBooking.jsx
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { createPageUrl } from "@/utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, CheckCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { format } from "date-fns";
+import DateSelection from "../components/client/DateSelection";
+import TimeSelection from "../components/client/TimeSelection";
+import ClientDetails from "../components/client/ClientDetails";
+import BookingConfirmation from "../components/client/BookingConfirmation";
+// Mock data
+const mockWorkingHours = [
+  { day_of_week: 0, start_time: "15:00", end_time: "22:00", is_available: true },
+  { day_of_week: 1, start_time: "15:00", end_time: "22:00", is_available: true }
+];
+const mockAppointments = [];
+export default function ClientBooking() {
+  const navigate = useNavigate();
+  const [step, setStep] = useState(1);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [clientInfo, setClientInfo] = useState({ name: "", email: "" });
+  const [workingHours, setWorkingHours] = useState([]);
+  const [existingAppointments, setExistingAppointments] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    loadData();
+  }, []);
+  const loadData = async () => {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      setWorkingHours(mockWorkingHours);
+      setExistingAppointments(mockAppointments);
+    } catch (error) {
+      console.error("Error loading data:", error);
+    }
+  };
+  const handleDateSelect = (date) => {
+    setSelectedDate(date);
+    setStep(2);
+  };
+  const handleTimeSelect = (time) => {
+    setSelectedTime(time);
+    setStep(3);
+  };
+  const handleClientSubmit = (info) => {
+    setClientInfo(info);
+    setStep(4);
+  };
+  const handleBookingConfirm = async (appointmentData) => {
+    setIsLoading(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      console.log("Appointment booked:", appointmentData);
+      setStep(5);
+    } catch (error) {
+      console.error("Error creating appointment:", error);
+      alert("שגיאה ביצירת התור. אנא נסה שוב.");
+    }
+    setIsLoading(false);
+  };
+  const getStepTitle = () => {
+    switch (step) {
+      case 1: return "Select Date";
+      case 2: return "Select Time";
+      case 3: return "Enter Details";
+      case 4: return "Confirm Booking";
+      case 5: return "Booking Confirmed";
+      default: return "Book Appointment";
+    }
+  };
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-6">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-4 mb-8">
+          <Button variant="outline" size="icon" onClick={() => step > 1 ? setStep(step - 1) : navigate(createPageUrl("HomePage"))} className="shrink-0 bg-white/10 border-white/20 text-white hover:bg-white/20">
+            <ArrowLeft className="w-4 h-4" />
+          </Button>
+          <div>
+            <h1 className="text-4xl font-light text-white">{getStepTitle()}</h1>
+            <p className="text-slate-300 text-lg">Book your appointment with zonot</p>
+          </div>
+        </motion.div>
+        {/* Progress Steps */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="flex justify-center mb-12">
+          <div className="flex items-center gap-3">
+            {[1, 2, 3, 4].map((stepNum) => (
+              <div key={stepNum} className="flex items-center">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-300 ${
+                  step >= stepNum ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg' : 'bg-white/20 text-slate-400 backdrop-blur-sm'
+                }`}>
+                  {step > stepNum ? <CheckCircle className="w-5 h-5" /> : stepNum}
+                </div>
+                {stepNum < 4 && <div className={`w-12 h-1 mx-3 rounded-full transition-colors duration-300 ${step > stepNum ? 'bg-gradient-to-r from-blue-500 to-indigo-600' : 'bg-white/20'}`} />}
+              </div>
+            ))}
+          </div>
+        </motion.div>
+        {/* Step Content */}
+        <motion.div key={step} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3 }}>
+          {step === 1 && <DateSelection workingHours={workingHours} existingAppointments={existingAppointments} onDateSelect={handleDateSelect} />}
+          {step === 2 && <TimeSelection selectedDate={selectedDate} workingHours={workingHours} existingAppointments={existingAppointments} onTimeSelect={handleTimeSelect} onBack={() => setStep(1)} />}
+          {step === 3 && <ClientDetails onSubmit={handleClientSubmit} onBack={() => setStep(2)} />}
+          {step === 4 && <BookingConfirmation selectedDate={selectedDate} selectedTime={selectedTime} clientInfo={clientInfo} onConfirm={handleBookingConfirm} onBack={() => setStep(3)} isLoading={isLoading} />}
+          {step === 5 && (
+            <Card className="border-0 shadow-2xl max-w-lg mx-auto bg-gradient-to-br from-green-50/95 to-emerald-50/95 backdrop-blur-lg">
+              <CardContent className="p-8 text-center">
+                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, delay: 0.2 }} className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center shadow-lg">
+                  <CheckCircle className="w-10 h-10 text-white" />
+                </motion.div>
+                <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-3xl font-bold text-slate-800 mb-4">התור נקבע בהצלחה! 🎉</motion.h2>
+                <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="text-slate-600 mb-4 text-lg leading-relaxed">התור שלך נשמר במערכת.</motion.p>
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.0 }}>
+                  <Button onClick={() => navigate(createPageUrl("HomePage"))} className="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+                    חזרה לדף הראשי
+                  </Button>
+                </motion.div>
+              </CardContent>
+            </Card>
+          )}
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+```
+```javascript
+// src/pages/CancelAppointment.jsx
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { createPageUrl } from "@/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, Mail, AlertTriangle, CheckCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { format } from "date-fns";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+// Mock data
+const mockAppointments = [
+  {
+    id: 1,
+    client_name: "John Doe",
+    client_email: "john@example.com",
+    appointment_date: "2024-01-15",
+    start_time: "15:00",
+    end_time: "15:50",
+    status: "booked",
+    price: 4.0
+  }
+];
+export default function CancelAppointment() {
+  const navigate = useNavigate();
+  const [searchEmail, setSearchEmail] = useState("");
+  const [foundAppointments, setFoundAppointments] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [isCancelling, setIsCancelling] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
+  const searchAppointments = async (e) => {
+    e.preventDefault();
+    setIsSearching(true);
+    setMessage("");
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      const appointments = mockAppointments.filter(apt =>
+        apt.status === 'booked' && apt.client_email === searchEmail
+      );
+     
+      setFoundAppointments(appointments);
+      if (appointments.length === 0) {
+        setMessage("No appointments found with this email address.");
+        setMessageType("warning");
+      }
+    } catch (error) {
+      console.error("Error searching appointments:", error);
+      setMessage("Error searching for appointments. Please try again.");
+      setMessageType("error");
+    }
+    setIsSearching(false);
+  };
+  const cancelAppointment = async (appointment) => {
+    if (!confirm("האם אתה בטוח שברצונך לבטל את התור? חל תשלום של $2.00 על הביטול")) {
+      return;
+    }
+   
+    setIsCancelling(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      setMessage("התור בוטל בהצלחה! זכור כי חל תשלום של $2.00 על הביטול.");
+      setMessageType("success");
+      setFoundAppointments([]);
+      setSearchEmail("");
+    } catch (error) {
+      console.error("שגיאה בביטול התור:", error);
+      setMessage("שגיאה בביטול התור. אנא נסה שוב.");
+      setMessageType("error");
+    }
+    setIsCancelling(false);
+  };
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-red-900 to-slate-900 p-6">
+      <div className="max-w-2xl mx-auto">
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-4 mb-8">
+          <Button variant="outline" size="icon" onClick={() => navigate(createPageUrl("HomePage"))} className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+            <ArrowLeft className="w-4 h-4" />
+          </Button>
+          <div>
+            <h1 className="text-4xl font-light text-white">Cancel Appointment</h1>
+            <p className="text-slate-300 text-lg">Find and cancel your upcoming appointment</p>
+          </div>
+        </motion.div>
+        <Card className="border-0 shadow-2xl bg-gradient-to-br from-white/95 to-red-50/95 backdrop-blur-lg">
+          <CardHeader className="bg-gradient-to-r from-red-600 to-pink-700 text-white rounded-t-lg">
+            <CardTitle className="flex items-center gap-2 text-xl">
+              <AlertTriangle className="w-5 h-5" />
+              Find Your Appointment
+            </CardTitle>
+            <p className="text-red-100">Enter the email address used when booking</p>
+          </CardHeader>
+         
+          <CardContent className="p-8">
+            <form onSubmit={searchAppointments} className="space-y-6">
+              <div className="space-y-3">
+                <label className="text-sm font-semibold text-slate-700">Email Address</label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <Input type="email" value={searchEmail} onChange={(e) => setSearchEmail(e.target.value)} placeholder="Enter your email address" className="pl-12 h-14 text-lg border-2 focus:border-red-500 transition-all duration-200" required />
+                </div>
+              </div>
+             
+              <Button type="submit" disabled={isSearching} className="w-full h-14 bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+                {isSearching ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Searching...
+                  </div>
+                ) : (
+                  'Find My Appointments'
+                )}
+              </Button>
+            </form>
+            {message && (
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-6">
+                <Alert variant={messageType === "success" ? "default" : "destructive"}>
+                  {messageType === "success" ? <CheckCircle className="h-4 w-4" /> : <AlertTriangle className="h-4 w-4" />}
+                  <AlertDescription>{message}</AlertDescription>
+                </Alert>
+              </motion.div>
+            )}
+            {foundAppointments.length > 0 && (
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-8 space-y-4">
+                <h3 className="font-semibold text-slate-800 text-lg">Your Appointments:</h3>
+                {foundAppointments.map((appointment) => (
+                  <div key={appointment.id} className="p-6 bg-white border-2 border-red-100 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h4 className="font-semibold text-slate-800 text-lg">{format(new Date(appointment.appointment_date), 'EEEE, MMMM d, yyyy')}</h4>
+                        <p className="text-slate-600 text-lg">{appointment.start_time} - {appointment.end_time}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-lg font-semibold text-green-600">$4.00</p>
+                        <p className="text-sm text-red-600">Cancellation: $2.00</p>
+                      </div>
+                    </div>
+                   
+                    <Button onClick={() => cancelAppointment(appointment)} disabled={isCancelling} className="w-full h-12 bg-gradient-to-r from-red-600 to-pink-700 hover:from-red-700 hover:to-pink-800 text-white font-semibold">
+                      {isCancelling ? (
+                        <div className="flex items-center gap-2">
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          Cancelling...
+                        </div>
+                      ) : (
+                        'Cancel This Appointment - $2.00 Fee'
+                      )}
+                    </Button>
+                  </div>
+                ))}
+              </motion.div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
+```
+```javascript
+// src/pages/Gallery.jsx
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { createPageUrl } from "@/utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { ArrowLeft, Camera } from "lucide-react";
+import { motion } from "framer-motion";
+// Mock data
+const mockGalleryItems = [
+  {
+    id: 1,
+    title: "Classic Cut",
+    description: "Professional classic haircut",
+    image_url: "https://images.unsplash.com/photo-1562322140-8baeececf3df?w=400",
+    is_featured: true
+  }
+];
+export default function Gallery() {
+  const navigate = useNavigate();
+  const [galleryItems, setGalleryItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    loadGalleryItems();
+  }, []);
+  const loadGalleryItems = async () => {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setGalleryItems(mockGalleryItems);
+    } catch (error) {
+      console.error("Error loading gallery items:", error);
+    }
+    setIsLoading(false);
+  };
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="text-white text-xl">Loading gallery...</div>
+      </div>
+    );
+  }
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-4 mb-12">
+          <Button variant="outline" size="icon" onClick={() => navigate(createPageUrl("HomePage"))} className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+            <ArrowLeft className="w-4 h-4" />
+          </Button>
+          <div>
+            <h1 className="text-5xl font-light text-white mb-2">Our Work Gallery</h1>
+            <p className="text-slate-300 text-xl">Showcasing our professional cuts and styling</p>
+          </div>
+        </motion.div>
+        {/* Gallery Grid */}
+        {galleryItems.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {galleryItems.map((item, index) => (
+              <motion.div key={item.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }}>
+                <Card className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/20 transition-all duration-500 group overflow-hidden shadow-2xl">
+                  <div className="relative aspect-square overflow-hidden">
+                    <img src={item.image_url} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                    {item.is_featured && (
+                      <div className="absolute top-3 right-3">
+                        <div className="bg-gradient-to-r from-amber-400 to-yellow-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg">⭐ Featured</div>
+                      </div>
+                    )}
+                  </div>
+                  <CardContent className="p-6">
+                    <h3 className="font-bold text-white mb-2 text-lg">{item.title}</h3>
+                    <p className="text-sm text-slate-300 leading-relaxed">{item.description}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20">
+            <Camera className="w-24 h-24 text-slate-500 mx-auto mb-6" />
+            <h3 className="text-3xl text-slate-400 mb-4 font-light">No gallery items yet</h3>
+            <p className="text-slate-500 text-lg">Check back soon for our latest work!</p>
+          </motion.div>
+        )}
+        {/* Footer */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="text-center mt-20">
+          <p className="text-slate-500 text-lg">Showcasing the best of zonot barbershop • Professional cuts since 2024</p>
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+```
+```javascript
+// src/components/barber/BarberStats.jsx
+import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Calendar, Clock, Users, CheckCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { Skeleton } from "@/components/ui/skeleton";
+export default function BarberStats({ appointments, isLoading }) {
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {Array(4).fill(0).map((_, i) => (
+          <Card key={i} className="border-0 shadow-lg bg-white/90 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <Skeleton className="h-4 w-20 mb-2" />
+              <Skeleton className="h-8 w-16" />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    );
+  }
+  const todayAppointments = appointments.filter(apt => {
+    const today = new Date().toISOString().split('T')[0];
+    return apt.appointment_date === today && apt.status !== 'cancelled';
+  });
+  const totalAppointments = appointments.filter(apt => apt.status !== 'cancelled').length;
+  const completedAppointments = appointments.filter(apt => apt.status === 'completed').length;
+  const uniqueClients = new Set(appointments.filter(apt => apt.status !== 'cancelled').map(apt => apt.client_email)).size;
+  const stats = [
+    { title: "תורים היום", value: todayAppointments.length, icon: Calendar, color: "from-blue-500 to-blue-600" },
+    { title: "סה״כ תורים", value: totalAppointments, icon: Clock, color: "from-green-500 to-green-600" },
+    { title: "לקוחות", value: uniqueClients, icon: Users, color: "from-purple-500 to-purple-600" },
+    { title: "הושלמו", value: completedAppointments, icon: CheckCircle, color: "from-amber-500 to-amber-600" }
+  ];
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {stats.map((stat, index) => (
+        <motion.div key={index} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }}>
+          <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white/90 backdrop-blur-sm">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-slate-600 mb-1">{stat.title}</p>
+                  <p className="text-3xl font-bold text-slate-800">{stat.value}</p>
+                </div>
+                <div className={`p-3 rounded-full bg-gradient-to-r ${stat.color}`}>
+                  <stat.icon className="w-6 h-6 text-white" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+```
+```javascript
+// src/components/barber/WorkingHoursSetup.jsx
+import React, { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { Clock, Save, Settings } from "lucide-react";
+import { motion } from "framer-motion";
+const DAYS_IN_HEBREW = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
+export default function WorkingHoursSetup({ workingHours, onUpdate }) {
+  const [schedule, setSchedule] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    const initialSchedule = {};
+    for (let day = 0; day < 7; day++) {
+      const existing = workingHours.find(wh => wh.day_of_week === day);
+      initialSchedule[day] = existing || {
+        day_of_week: day,
+        start_time: "15:00",
+        end_time: "22:00",
+        is_available: day !== 5 && day !== 6
+      };
+    }
+    setSchedule(initialSchedule);
+  }, [workingHours]);
+  const handleToggleDay = (day) => {
+    setSchedule(prev => ({
+      ...prev,
+      [day]: { ...prev[day], is_available: !prev[day].is_available }
+    }));
+  };
+  const handleTimeChange = (day, field, value) => {
+    setSchedule(prev => ({
+      ...prev,
+      [day]: { ...prev[day], [field]: value }
+    }));
+  };
+  const handleSave = async () => {
+    setIsLoading(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log("Saving schedule:", schedule);
+      onUpdate();
+    } catch (error) {
+      console.error("Error saving working hours:", error);
+    }
+    setIsLoading(false);
+  };
+  return (
+    <Card className="border-0 shadow-lg bg-white/90 backdrop-blur-sm">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Settings className="w-5 h-5" />
+          הגדרת זמני עבודה
+        </CardTitle>
+        <p className="text-slate-600">קבע את הימים והשעות שבהם אתה זמין לתורים</p>
+      </CardHeader>
+     
+      <CardContent className="space-y-6">
+        {DAYS_IN_HEBREW.map((dayName, dayIndex) => (
+          <motion.div key={dayIndex} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: dayIndex * 0.1 }} className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm border border-slate-100">
+            <div className="flex items-center gap-4">
+              <Switch checked={schedule[dayIndex]?.is_available || false} onCheckedChange={() => handleToggleDay(dayIndex)} />
+              <span className="font-medium text-slate-800 w-16">{dayName}</span>
+            </div>
+           
+            {schedule[dayIndex]?.is_available && (
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-slate-500" />
+                  <span className="text-sm text-slate-600">מ:</span>
+                  <Input type="time" value={schedule[dayIndex]?.start_time || "15:00"} onChange={(e) => handleTimeChange(dayIndex, 'start_time', e.target.value)} className="w-32" />
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-slate-600">עד:</span>
+                  <Input type="time" value={schedule[dayIndex]?.end_time || "22:00"} onChange={(e) => handleTimeChange(dayIndex, 'end_time', e.target.value)} className="w-32" />
+                </div>
+              </div>
+            )}
+          </motion.div>
+        ))}
+       
+        <div className="flex justify-end pt-4">
+          <Button onClick={handleSave} disabled={isLoading} className="bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
+            {isLoading ? (
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                שומר...
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Save className="w-4 h-4" />
+                שמור זמני עבודה
+              </div>
+            )}
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+```
+```javascript
+// src/components/barber/AppointmentsList.jsx
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Calendar, Clock, User, X, DollarSign } from "lucide-react";
+import { motion } from "framer-motion";
+import { format } from "date-fns";
+import { Skeleton } from "@/components/ui/skeleton";
+export default function AppointmentsList({ appointments, isLoading, onRefresh }) {
+  const handleCancelAppointment = async (appointment) => {
+    if (!confirm(`האם אתה בטוח שברצונך לבטל את התור של ${appointment.client_name}?`)) return;
+   
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log("Cancelled appointment:", appointment.id);
+      onRefresh();
+    } catch (error) {
+      console.error("Error cancelling appointment:", error);
+      alert("שגיאה בביטול התור");
+    }
+  };
+  if (isLoading) {
+    return (
+      <Card className="border-0 shadow-lg bg-white/90 backdrop-blur-sm">
+        <CardHeader><CardTitle>תורים קרובים</CardTitle></CardHeader>
+        <CardContent className="space-y-4">
+          {Array(3).fill(0).map((_, i) => (
+            <div key={i} className="p-4 bg-white rounded-lg shadow-sm">
+              <Skeleton className="h-4 w-32 mb-2" />
+              <Skeleton className="h-4 w-48 mb-2" />
+              <Skeleton className="h-4 w-24" />
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+    );
+  }
+  const upcomingAppointments = appointments
+    .filter(apt => apt.status === 'booked')
+    .sort((a, b) => new Date(`${a.appointment_date}T${a.start_time}`) - new Date(`${b.appointment_date}T${b.start_time}`))
+    .slice(0, 10);
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'booked': return 'bg-blue-100 text-blue-800';
+      case 'cancelled': return 'bg-red-100 text-red-800';
+      case 'completed': return 'bg-green-100 text-green-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+  const getStatusText = (status) => {
+    switch (status) {
+      case 'booked': return 'מתוכנן';
+      case 'cancelled': return 'בוטל';
+      case 'completed': return 'הושלם';
+      default: return status;
+    }
+  };
+  return (
+    <Card className="border-0 shadow-lg bg-white/90 backdrop-blur-sm">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Calendar className="w-5 h-5" />
+          תורים קרובים
+        </CardTitle>
+      </CardHeader>
+     
+      <CardContent>
+        {upcomingAppointments.length === 0 ? (
+          <div className="text-center py-8 text-slate-600">אין תורים קרובים</div>
+        ) : (
+          <div className="space-y-4">
+            {upcomingAppointments.map((appointment, index) => (
+              <motion.div key={appointment.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }} className="p-4 bg-white rounded-lg shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <User className="w-4 h-4 text-slate-500" />
+                    <span className="font-medium text-slate-800">{appointment.client_name}</span>
+                    <Badge className={`${getStatusColor(appointment.status)} flex items-center gap-1`}>
+                      <DollarSign className="w-3 h-3" />${appointment.price || 4}
+                    </Badge>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge className={getStatusColor(appointment.status)}>{getStatusText(appointment.status)}</Badge>
+                    <Button variant="ghost" size="sm" onClick={() => handleCancelAppointment(appointment)} className="text-red-500 hover:text-red-700 hover:bg-red-50">
+                      <X className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-slate-600">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4" />
+                    {format(new Date(appointment.appointment_date), 'dd/MM/yyyy')}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-4 h-4" />
+                    {appointment.start_time} - {appointment.end_time}
+                  </div>
+                </div>
+              
+                <div className="mt-2 text-sm text-slate-500">📧 {appointment.client_email}</div>
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+```
+```javascript
+// src/components/barber/GalleryManager.jsx
+import React, { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
+import { Camera, Upload, Star, Trash2, Edit } from "lucide-react";
+import { motion } from "framer-motion";
+// Mock data
+const mockGalleryItems = [
+  {
+    id: 1,
+    title: "Classic Cut",
+    description: "Professional classic haircut",
+    image_url: "https://images.unsplash.com/photo-1562322140-8baeececf3df?w=400",
+    is_featured: true
+  }
+];
+export default function GalleryManager() {
+  const [galleryItems, setGalleryItems] = useState([]);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [editingItem, setEditingItem] = useState(null);
+  const [newItem, setNewItem] = useState({ title: "", description: "", is_featured: false });
+  useEffect(() => {
+    loadGalleryItems();
+  }, []);
+  const loadGalleryItems = async () => {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setGalleryItems(mockGalleryItems);
+    } catch (error) {
+      console.error("Error loading gallery items:", error);
+    }
+    setIsLoading(false);
+  };
+  const handleFileUpload = async (files) => {
+    if (files.length === 0 || !newItem.title.trim()) {
+      alert("אנא הכנס כותרת לפני העלאת התמונה");
+      return;
+    }
+  
+    setIsUploading(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      alert("Image uploaded successfully!");
+      setNewItem({ title: "", description: "", is_featured: false });
+      loadGalleryItems();
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("שגיאה בהעלאת הקובץ");
+    }
+    setIsUploading(false);
+  };
+  const handleEdit = async (itemId, updatedData) => {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log("Updated item:", itemId, updatedData);
+      loadGalleryItems();
+      setEditingItem(null);
+    } catch (error) {
+      console.error("Error updating item:", error);
+      alert("שגיאה בעדכון הפריט");
+    }
+  };
+  const handleDelete = async (itemId) => {
+    if (!confirm("האם אתה בטוח שברצונך למחוק את הפריט הזה?")) return;
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      loadGalleryItems();
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      alert("שגיאה במחיקת הפריט");
+    }
+  };
+  const toggleFeatured = async (item) => {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      console.log("Toggled featured for:", item.id);
+      loadGalleryItems();
+    } catch (error) {
+      console.error("Error updating featured status:", error);
+    }
+  };
+  if (isLoading) {
+    return (
+      <Card className="border-0 shadow-lg bg-white/90 backdrop-blur-sm">
+        <CardContent className="p-8 text-center">
+          <div className="text-slate-600">טוען גלריה...</div>
+        </CardContent>
+      </Card>
+    );
+  }
+  return (
+    <div className="space-y-8">
+      {/* Add New Image Card */}
+      <Card className="border-0 shadow-lg bg-white/90 backdrop-blur-sm">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Upload className="w-5 h-5" />
+            הוסף תמונה חדשה
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-sm font-medium text-slate-700 mb-2 block">כותרת *</label>
+              <Input value={newItem.title} onChange={(e) => setNewItem(prev => ({ ...prev, title: e.target.value }))} placeholder="למשל: תספורת קלאסית" className="border-2" />
+            </div>
+            <div className="flex items-center gap-2">
+              <Switch checked={newItem.is_featured} onCheckedChange={(checked) => setNewItem(prev => ({ ...prev, is_featured: checked }))} />
+              <label className="text-sm font-medium text-slate-700">תמונה מומלצת</label>
+            </div>
+          </div>
+        
+          <div>
+            <label className="text-sm font-medium text-slate-700 mb-2 block">תיאור</label>
+            <Textarea value={newItem.description} onChange={(e) => setNewItem(prev => ({ ...prev, description: e.target.value }))} placeholder="תאר את העבודה שמוצגת בתמונה..." className="h-20" />
+          </div>
+         
+          <div>
+            <input type="file" multiple accept="image/*" onChange={(e) => handleFileUpload(Array.from(e.target.files))} className="hidden" id="gallery-upload" />
+            <Button onClick={() => document.getElementById('gallery-upload')?.click()} disabled={isUploading || !newItem.title.trim()} className="w-full bg-gradient-to-r from-purple-600 to-violet-700 hover:from-purple-700 hover:to-violet-800">
+              {isUploading ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  מעלה...
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Camera className="w-4 h-4" />
+                  העלה תמונות
+                </div>
+              )}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+      {/* Gallery Management Card */}
+      <Card className="border-0 shadow-lg bg-white/90 backdrop-blur-sm">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Camera className="w-5 h-5" />
+            ניהול גלריה ({galleryItems.length} פריטים)
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {galleryItems.length === 0 ? (
+            <div className="text-center py-8 text-slate-600">אין פריטים בגלריה</div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {galleryItems.map((item, index) => (
+                <motion.div key={item.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }} className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+                  <div className="relative aspect-square">
+                    <img src={item.image_url} alt={item.title} className="w-full h-full object-cover" />
+                    {item.is_featured && (
+                      <div className="absolute top-2 right-2">
+                        <div className="bg-amber-500 text-white px-2 py-1 rounded-full text-xs font-semibold">⭐ מומלץ</div>
+                      </div>
+                    )}
+                  </div>
+                
+                  {editingItem === item.id ? (
+                    <div className="p-3 space-y-3">
+                      <Input defaultValue={item.title} id={`title-${item.id}`} className="text-sm" />
+                      <Textarea defaultValue={item.description} id={`desc-${item.id}`} className="text-sm h-16" />
+                      <div className="flex gap-2">
+                        <Button size="sm" onClick={() => {
+                          const title = document.getElementById(`title-${item.id}`).value;
+                          const description = document.getElementById(`desc-${item.id}`).value;
+                          handleEdit(item.id, { ...item, title, description });
+                        }}>שמור</Button>
+                        <Button size="sm" variant="outline" onClick={() => setEditingItem(null)}>בטל</Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="p-3">
+                      <h3 className="font-semibold text-slate-800 mb-1">{item.title}</h3>
+                      <p className="text-sm text-slate-600 mb-3 line-clamp-2">{item.description}</p>
+                    
+                      <div className="flex items-center justify-between">
+                        <div className="flex gap-1">
+                          <Button size="sm" variant="outline" onClick={() => setEditingItem(item.id)}><Edit className="w-3 h-3" /></Button>
+                          <Button size="sm" variant="outline" onClick={() => toggleFeatured(item)} className={item.is_featured ? 'bg-amber-100 text-amber-700' : ''}><Star className="w-3 h-3" /></Button>
+                          <Button size="sm" variant="outline" onClick={() => handleDelete(item.id)} className="text-red-600 hover:text-red-700"><Trash2 className="w-3 h-3" /></Button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+```
+```javascript
+// src/components/barber/RemindersList.jsx
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Bell } from "lucide-react";
+export default function RemindersList({ appointments, onRefresh }) {
+  const sendReminders = async () => {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      alert("Reminders sent successfully!");
+      onRefresh();
+    } catch (error) {
+      console.error("Error sending reminders:", error);
+    }
+  };
+  const pendingReminders = appointments.filter(apt => apt.status === 'booked');
+  return (
+    <Card className="border-0 shadow-lg bg-white/90 backdrop-blur-sm">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Bell className="w-5 h-5" />
+          תזכורות 24 שעות
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        {pendingReminders.length === 0 ? (
+          <div className="text-center py-8 text-slate-600">אין תזכורות ממתינות</div>
+        ) : (
+          <div className="space-y-4">
+            <Button onClick={sendReminders} className="mb-4 bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800">
+              שלח את כל התזכורות ({pendingReminders.length})
+            </Button>
+            {pendingReminders.map(apt => (
+              <div key={apt.id} className="p-4 bg-white rounded-lg border border-slate-200">
+                <p className="font-medium">{apt.client_name} - {apt.appointment_date} {apt.start_time}</p>
+                <p className="text-sm text-slate-600">{apt.client_email}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+```
+```javascript
+// src/components/client/DateSelection.jsx
+import React, { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { format, addDays, startOfWeek, isSameDay, isBefore } from "date-fns";
+import { motion } from "framer-motion";
+export default function DateSelection({ workingHours, existingAppointments, onDateSelect }) {
+  const [currentWeek, setCurrentWeek] = useState(startOfWeek(new Date(), { weekStartsOn: 0 }));
+  const availableDays = workingHours.filter(wh => wh.is_available).map(wh => wh.day_of_week);
+  const isDateAvailable = (date) => {
+    const dayOfWeek = date.getDay();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+  
+    return !isBefore(date, today) && availableDays.includes(dayOfWeek);
+  };
+  const getWeekDays = () => {
+    const days = [];
+    for (let i = 0; i < 7; i++) {
+      days.push(addDays(currentWeek, i));
+    }
+    return days;
+  };
+  const nextWeek = () => setCurrentWeek(addDays(currentWeek, 7));
+  const prevWeek = () => {
+    const previousWeek = addDays(currentWeek, -7);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (!isBefore(previousWeek, today)) setCurrentWeek(previousWeek);
+  };
+  const weekDays = getWeekDays();
+  return (
+    <Card className="border-0 shadow-lg max-w-2xl mx-auto bg-white/90 backdrop-blur-sm">
+      <CardHeader className="text-center">
+        <CardTitle className="flex items-center justify-center gap-2">
+          <CalendarIcon className="w-5 h-5" />
+          Select Your Preferred Date
+        </CardTitle>
+        <p className="text-slate-600">Choose from available dates</p>
+      </CardHeader>
+     
+      <CardContent className="p-6">
+        <div className="flex justify-between items-center mb-6">
+          <Button variant="outline" onClick={prevWeek} disabled={isBefore(addDays(currentWeek, -7), new Date())}>Previous Week</Button>
+          <h3 className="font-semibold text-lg">{format(currentWeek, 'MMM dd')} - {format(addDays(currentWeek, 6), 'MMM dd, yyyy')}</h3>
+          <Button variant="outline" onClick={nextWeek}>Next Week</Button>
+        </div>
+       
+        <div className="grid grid-cols-7 gap-2">
+          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
+            <div key={index} className="text-center text-sm font-medium text-slate-600 p-2">{day}</div>
+          ))}
+        
+          {weekDays.map((date, index) => (
+            <motion.div key={date.toISOString()} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: index * 0.05 }}>
+              <Button variant={isDateAvailable(date) ? "outline" : "ghost"} disabled={!isDateAvailable(date)} onClick={() => onDateSelect(date)} className={`w-full h-12 p-0 ${
+                isDateAvailable(date) ? 'hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700' : 'text-slate-300 cursor-not-allowed'
+              } ${isSameDay(date, new Date()) && isDateAvailable(date) ? 'ring-2 ring-blue-500 bg-blue-50' : ''}`}>
+                <div className="text-center">
+                  <div className="font-semibold">{format(date, 'd')}</div>
+                  <div className="text-xs">{format(date, 'EEE')}</div>
+                </div>
+              </Button>
+            </motion.div>
+          ))}
+        </div>
+       
+        <div className="mt-6 text-center text-sm text-slate-600">Available days are highlighted. Select a date to continue.</div>
+      </CardContent>
+    </Card>
+  );
+}
+```
+```javascript
+// src/components/client/TimeSelection.jsx
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Clock } from "lucide-react";
+import { format } from "date-fns";
+import { motion } from "framer-motion";
+export default function TimeSelection({ selectedDate, workingHours, existingAppointments, onTimeSelect, onBack }) {
+  const generateTimeSlots = () => {
+    const dayOfWeek = selectedDate.getDay();
+    const daySchedule = workingHours.find(wh => wh.day_of_week === dayOfWeek && wh.is_available);
+  
+    if (!daySchedule) return [];
+   
+    const slots = [];
+    const [startHour, startMinute] = daySchedule.start_time.split(':').map(Number);
+    const [endHour, endMinute] = daySchedule.end_time.split(':').map(Number);
+  
+    const startTime = startHour * 60 + startMinute;
+    const endTime = endHour * 60 + endMinute;
+  
+    for (let time = startTime; time + 50 <= endTime; time += 50) {
+      const hour = Math.floor(time / 60);
+      const minute = time % 60;
+      const endSlotTime = time + 50;
+      const endHour = Math.floor(endSlotTime / 60);
+      const endMinute = endSlotTime % 60;
+    
+      slots.push({
+        start: `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`,
+        end: `${endHour.toString().padStart(2, '0')}:${endMinute.toString().padStart(2, '0')}`
+      });
+    }
+  
+    return slots;
+  };
+  const isTimeSlotAvailable = (timeSlot) => {
+    const selectedDateStr = selectedDate.toISOString().split('T')[0];
+    return !existingAppointments.some(apt =>
+      apt.appointment_date === selectedDateStr && apt.status === 'booked' &&
+      ((apt.start_time <= timeSlot.start && apt.end_time > timeSlot.start) ||
+       (apt.start_time < timeSlot.end && apt.end_time >= timeSlot.end) ||
+       (apt.start_time >= timeSlot.start && apt.end_time <= timeSlot.end))
+    );
+  };
+  const timeSlots = generateTimeSlots();
+  const availableSlots = timeSlots.filter(isTimeSlotAvailable);
+  return (
+    <Card className="border-0 shadow-lg max-w-2xl mx-auto bg-white/90 backdrop-blur-sm">
+      <CardHeader className="text-center">
+        <CardTitle className="flex items-center justify-center gap-2">
+          <Clock className="w-5 h-5" />
+          Select Time Slot
+        </CardTitle>
+        <p className="text-slate-600">Available times for {format(selectedDate, 'EEEE, MMMM d, yyyy')}</p>
+      </CardHeader>
+     
+      <CardContent className="p-6">
+        {availableSlots.length === 0 ? (
+          <div className="text-center py-8">
+            <p className="text-slate-600 mb-4">No available time slots for this date.</p>
+            <Button onClick={onBack} variant="outline">Choose Different Date</Button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {availableSlots.map((slot, index) => (
+              <motion.div key={`${slot.start}-${slot.end}`} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: index * 0.05 }}>
+                <Button onClick={() => onTimeSelect(slot)} variant="outline" className="w-full h-16 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700 transition-all duration-200">
+                  <div className="text-center">
+                    <div className="font-semibold">{slot.start}</div>
+                    <div className="text-xs text-slate-500">{slot.end}</div>
+                    <div className="text-xs text-slate-400">50 min</div>
+                  </div>
+                </Button>
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+```
+```javascript
+// src/components/client/ClientDetails.jsx
+import React, { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { User, Mail, AlertCircle, Shield } from "lucide-react";
+import { motion } from "framer-motion";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+export default function ClientDetails({ onSubmit, onBack }) {
+  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [errors, setErrors] = useState({});
+  const [isValidating, setIsValidating] = useState(false);
+  const validateForm = () => {
+    const newErrors = {};
+  
+    if (!formData.name.trim()) newErrors.name = "Full name is required";
+    else if (formData.name.trim().length < 2) newErrors.name = "Name must be at least 2 characters";
+    else if (!/^[a-zA-Z\s\u0590-\u05FF]+$/.test(formData.name.trim())) newErrors.name = "Name can only contain letters and spaces";
+   
+    if (!formData.email.trim()) newErrors.email = "Email address is required";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = "Please enter a valid email address";
+  
+    return newErrors;
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newErrors = validateForm();
+  
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+   
+    setIsValidating(true);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    setIsValidating(false);
+    onSubmit(formData);
+  };
+  const handleChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) setErrors(prev => ({ ...prev, [field]: '' }));
+  };
+  return (
+    <Card className="border-0 shadow-2xl max-w-lg mx-auto bg-gradient-to-br from-white/95 to-blue-50/95 backdrop-blur-lg">
+      <CardHeader className="text-center pb-6 bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-t-lg">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+          <User className="w-8 h-8 text-white" />
+        </div>
+        <CardTitle className="text-2xl font-light">Your Contact Details</CardTitle>
+        <p className="text-blue-100 mt-2">We'll send appointment confirmations and reminders to your email</p>
+      </CardHeader>
+     
+      <CardContent className="p-8">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {errors.general && (
+            <Alert variant="destructive" className="border-red-200 bg-red-50">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{errors.general}</AlertDescription>
+            </Alert>
+          )}
+         
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-3">
+            <Label htmlFor="name" className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+              <User className="w-4 h-4" />
+              Full Name *
+            </Label>
+            <Input id="name" type="text" value={formData.name} onChange={(e) => handleChange('name', e.target.value)} placeholder="Enter your full name" className={`h-12 text-lg border-2 focus:border-blue-500 transition-all duration-200 ${errors.name ? 'border-red-300 focus:border-red-500' : 'border-slate-200'}`} />
+            {errors.name && <p className="text-sm text-red-600 flex items-center gap-1"><AlertCircle className="w-3 h-3" />{errors.name}</p>}
+          </motion.div>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="space-y-3">
+            <Label htmlFor="email" className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+              <Mail className="w-4 h-4" />
+              Email Address *
+            </Label>
+            <Input id="email" type="email" value={formData.email} onChange={(e) => handleChange('email', e.target.value)} placeholder="your.email@example.com" className={`h-12 text-lg border-2 focus:border-blue-500 transition-all duration-200 ${errors.email ? 'border-red-300 focus:border-red-500' : 'border-slate-200'}`} />
+            {errors.email && <p className="text-sm text-red-600 flex items-center gap-1"><AlertCircle className="w-3 h-3" />{errors.email}</p>}
+          </motion.div>
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl border border-blue-200">
+            <div className="flex items-start gap-3">
+              <Shield className="w-5 h-5 text-blue-600 mt-0.5" />
+              <div>
+                <h4 className="font-semibold text-blue-900 mb-1">Contact Information</h4>
+                <ul className="text-sm text-blue-800 space-y-1">
+                  <li>• Your booking will be confirmed immediately</li>
+                  <li>• Keep this information for your records</li>
+                  <li>• Contact the barber directly for changes</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="flex gap-4 pt-4">
+            <Button type="button" variant="outline" onClick={onBack} disabled={isValidating} className="flex-1 h-12 border-2 border-slate-300 hover:bg-slate-50">Back</Button>
+            <Button type="submit" disabled={isValidating} className="flex-1 h-12 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white shadow-lg hover:shadow-xl transition-all duration-300">
+              {isValidating ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Verifying...
+                </div>
+              ) : (
+                'Continue'
+              )}
+            </Button>
+          </div>
+        </form>
+      </CardContent>
+    </Card>
+  );
+}
+```
+```javascript
+// src/components/client/BookingConfirmation.jsx
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Calendar, Clock, User, Mail, CheckCircle, DollarSign, AlertTriangle } from "lucide-react";
+import { format } from "date-fns";
+import { motion } from "framer-motion";
+export default function BookingConfirmation({ selectedDate, selectedTime, clientInfo, onConfirm, onBack, isLoading }) {
+  const handleConfirm = () => {
+    const appointmentData = {
+      barber_id: "main_barber",
+      client_name: clientInfo.name,
+      client_email: clientInfo.email,
+      appointment_date: selectedDate.toISOString().split('T')[0],
+      start_time: selectedTime.start,
+      end_time: selectedTime.end,
+      status: "booked"
+    };
+    onConfirm(appointmentData);
+  };
+  return (
+    <Card className="border-0 shadow-2xl max-w-2xl mx-auto bg-gradient-to-br from-white/95 to-blue-50/95 backdrop-blur-lg">
+      <CardHeader className="text-center pb-6 bg-gradient-to-r from-green-600 to-emerald-700 text-white rounded-t-lg">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+          <CheckCircle className="w-8 h-8 text-white" />
+        </div>
+        <CardTitle className="text-2xl font-light">Confirm Your Booking</CardTitle>
+        <p className="text-green-100 mt-2">Please review your appointment details carefully</p>
+      </CardHeader>
+     
+      <CardContent className="p-8 space-y-6">
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 rounded-2xl text-center text-white shadow-lg">
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <DollarSign className="w-8 h-8" />
+            <span className="text-4xl font-bold">$4.00</span>
+          </div>
+          <p className="text-green-100 font-medium text-lg">50-Minute Professional Haircut</p>
+        </motion.div>
+        <div className="grid md:grid-cols-2 gap-4">
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm border-2 border-blue-100">
+            <Calendar className="w-6 h-6 text-blue-600" />
+            <div>
+              <p className="font-semibold text-slate-800">Date</p>
+              <p className="text-slate-600">{format(selectedDate, 'EEEE, MMMM d, yyyy')}</p>
+            </div>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm border-2 border-green-100">
+            <Clock className="w-6 h-6 text-green-600" />
+            <div>
+              <p className="font-semibold text-slate-800">Time</p>
+              <p className="text-slate-600 text-lg font-medium">{selectedTime.start} - {selectedTime.end}</p>
+            </div>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm border-2 border-purple-100">
+            <User className="w-6 h-6 text-purple-600" />
+            <div>
+              <p className="font-semibold text-slate-800">Name</p>
+              <p className="text-slate-600 text-lg">{clientInfo.name}</p>
+            </div>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm border-2 border-amber-100">
+            <Mail className="w-6 h-6 text-amber-600" />
+            <div>
+              <p className="font-semibold text-slate-800">Email</p>
+              <p className="text-slate-600">{clientInfo.email}</p>
+            </div>
+          </motion.div>
+        </div>
+        <div className="bg-gradient-to-r from-amber-50 to-red-50 p-6 rounded-2xl border border-amber-200">
+          <h4 className="font-semibold text-amber-900 mb-3 flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5" />
+            Cancellation Policy
+          </h4>
+          <div className="space-y-3 text-amber-800">
+            <div className="flex items-center justify-between p-3 bg-white/60 rounded-lg">
+              <span>Cancellation deadline:</span>
+              <span className="font-semibold">5 hours before appointment</span>
+            </div>
+            <div className="flex items-center justify-between p-3 bg-white/60 rounded-lg">
+              <span>Cancellation fee:</span>
+              <span className="font-semibold text-red-600">$2.00</span>
+            </div>
+          </div>
+        </div>
+        <div className="flex gap-4 pt-4">
+          <Button type="button" variant="outline" onClick={onBack} disabled={isLoading} className="flex-1 h-14 border-2 border-slate-300 hover:bg-slate-50 text-lg">Back</Button>
+          <Button onClick={handleConfirm} disabled={isLoading} className="flex-1 h-14 bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+            {isLoading ? (
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Booking...
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-5 h-5" />
+                Confirm Booking - $4.00
+              </div>
+            )}
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+```
+```json
+// package.json
+{
+  "name": "zonot-barbershop",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.0",
+    "framer-motion": "^10.16.0",
+    "lucide-react": "^0.294.0",
+    "date-fns": "^2.30.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.4.0",
+    "vite": "^5.0.0"
+  }
+}
+```
+```javascript
+// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+      },
+    },
+  },
+  plugins: [],
+}
+```

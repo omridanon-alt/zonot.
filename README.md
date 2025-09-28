@@ -1,2 +1,0 @@
-# zonot.
-barber 
